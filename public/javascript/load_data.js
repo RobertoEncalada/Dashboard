@@ -223,3 +223,23 @@ let loadForecastByCity = () => {
 }
 
 loadForecastByCity()
+
+let loadExternalTable =async () => {
+  
+  //Requerimiento asíncrono
+  let proxyURL = 'https://cors-anywhere.herokuapp.com/'
+  let endpoint = proxyURL + 'https://www.gestionderiesgos.gob.ec/monitoreo-de-inundaciones/'
+  let response = await fetch(endpoint)
+  let responseText = await response.text()
+  const parser = new DOMParser();
+  const xml = parser.parseFromString(responseText, "text/html");
+
+  let elementoXML = xml.querySelector("#postcontent table")
+  let elementoDOM = document.getElementById("monitoreo")
+
+  elementoDOM.innerHTML = elementoXML.outerHTML
+
+  
+ }
+ 
+ loadExternalTable()
